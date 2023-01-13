@@ -5,11 +5,11 @@ import {Route, Routes} from "react-router";
 import UserWins from "./component/mastermind/user-wins";
 import UserLoses from "./component/mastermind/user-loses";
 import {BrowserRouter} from "react-router-dom";
-import MastermindStateless from "./mastermind-stateless";
+import GameProvider from "./provider/game-provider";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const routing = <Routes>
-    <Route path="/" element={<MastermindStateless />}></Route>
+    <Route path="/" element={<GameProvider />}></Route>
     <Route path="/wins" element={<UserWins />}></Route>
     <Route path="/loses" element={<UserLoses />}></Route>
 </Routes>

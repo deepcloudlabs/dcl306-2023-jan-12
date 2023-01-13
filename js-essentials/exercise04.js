@@ -8,5 +8,9 @@ const circle1 = {
     }
 };
 const {x,y,...rest} = circle1;
+const {color, thickness} = rest.style;
 console.log(x,y)
 console.log(rest)
+console.log(color)
+console.log(thickness)
+console.log(circle1)

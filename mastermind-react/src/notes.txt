@@ -1,0 +1,11 @@
+// 1. Component-Based Programming
+//    a. stateful components
+//       1) class-based component ✔
+//       2) function-based component + React Hooks ✔
+//    b. stateless components
+//       3) function-based component ✔
+//    Context API ✔ , reducer ✔
+//    React Routing ✔
+//    Build and deployment ✔
+// 2. Functional Programming
+// 3. Reactive Programming
