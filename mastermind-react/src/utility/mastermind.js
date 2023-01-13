@@ -1,20 +1,18 @@
+export const initialStatisticsState = {
+    wins: 0,
+    loses: 0
+};
 export const initialGameState = {
-    game: {
-        level: 3,
-            guess: createSecret(3),
-            secret: createSecret(3),
-            tries: 0,
-            maxTries: 10,
-            moves: [],
-            counter: 60,
-            lives: 3,
-            pbColorCounter: "bg-primary",
-            pbWidthCounter: "100%"
-    },
-    statistics: {
-        wins: 0,
-            loses: 0
-    }
+    level: 3,
+    guess: createSecret(3),
+    secret: createSecret(3),
+    tries: 0,
+    maxTries: 10,
+    moves: [],
+    counter: 60,
+    lives: 3,
+    pbColorCounter: "bg-primary",
+    pbWidthCounter: "100%"
 };
 export default function createSecret(level) {
     const digits = [];
@@ -59,22 +57,22 @@ export function evaluateMove(guess, secret) {
         }
     }
     //endregion
-    return new Move({guess,perfectMatch,partialMatch});
+    return new Move({guess, perfectMatch, partialMatch});
 }
 
 export class Move {
-    constructor({guess,perfectMatch,partialMatch}) {
+    constructor({guess, perfectMatch, partialMatch}) {
         this.guess = guess;
         this.perfectMatch = perfectMatch;
         this.partialMatch = partialMatch;
         this.message = "";
-        if (perfectMatch === 0 && partialMatch === 0){
+        if (perfectMatch === 0 && partialMatch === 0) {
             this.message = "No Match";
         } else {
-            if (partialMatch > 0){
+            if (partialMatch > 0) {
                 this.message = `-${partialMatch}`;
             }
-            if (perfectMatch > 0){
+            if (perfectMatch > 0) {
                 this.message += `+${perfectMatch}`;
             }
         }

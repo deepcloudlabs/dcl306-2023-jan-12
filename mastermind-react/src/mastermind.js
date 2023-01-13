@@ -20,7 +20,7 @@ import loadStateFromLocalStorage from "./utility/localstorage-util";
 // 1. Component-Based Programming
 //    a. stateful components
 //       1) class-based component ✔
-//       2) function-based component + React Hooks ✘
+//       2) function-based component + React Hooks ✔
 //    b. stateless components
 //       3) function-based component ✔
 //    Context API, reducer ✘
@@ -37,7 +37,12 @@ class Mastermind extends React.PureComponent {
     }
 
     componentDidMount() {
-        setInterval(this.countDown, 1_000);
+        this.timerId = setInterval(this.countDown, 1_000);
+    }
+
+
+    componentWillUnmount() {
+        clearInterval(this.timerId);
     }
 
     decrementCounter = (game) => {
