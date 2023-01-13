@@ -7,6 +7,9 @@ import CardHeader from "./component/common/card-header";
 import CardBody from "./component/common/card-body";
 import FormGroup from "./component/common/form-group";
 import ProgressBar from "./component/common/progress-bar";
+import InputText from "./component/common/input-text";
+import Button from "./component/common/button";
+import createSecret from "./utility/mastermind";
 
 //region NOTES ON COMPONENTS
 // 1. Component-Based Programming
@@ -25,8 +28,8 @@ class Mastermind extends React.PureComponent {
         this.state = {
             game: {
                 level: 3,
-                guess: 123,
-                secret: 549,
+                guess: createSecret(3),
+                secret: createSecret(3),
                 tries: 0,
                 maxTries: 10,
                 moves: [],
@@ -64,6 +67,11 @@ class Mastermind extends React.PureComponent {
         game[event.target.name] = Number(event.target.value);
         this.setState({game});
     }
+    play = (event) => {
+        const game = {...this.state.game};
+
+        this.setState({game});
+    }
     render() {
         return (
             <Container id="mastermind">
@@ -89,12 +97,11 @@ class Mastermind extends React.PureComponent {
                         </FormGroup>
                         <FormGroup>
                             <Label label="Guess" htmlFor="guess"/>
-                            <input id="guess"
-                                   className="form-control"
-                                   type="text"
-                                   name="guess"
-                                   onChange={this.handleInputChange}
-                                   value={this.state.game.guess}></input>
+                            <InputText id="guess"
+                                       value={this.state.game.guess}
+                                       handleChange={this.handleInputChange} />
+                            <p></p>
+                            <Button id="play" label="Play" bgColor="btn-success" click={this.play} />
                         </FormGroup>
                     </CardBody>
                 </Card>
