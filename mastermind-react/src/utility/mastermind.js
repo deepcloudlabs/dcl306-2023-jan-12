@@ -1,3 +1,21 @@
+export const initialGameState = {
+    game: {
+        level: 3,
+            guess: createSecret(3),
+            secret: createSecret(3),
+            tries: 0,
+            maxTries: 10,
+            moves: [],
+            counter: 60,
+            lives: 3,
+            pbColorCounter: "bg-primary",
+            pbWidthCounter: "100%"
+    },
+    statistics: {
+        wins: 0,
+            loses: 0
+    }
+};
 export default function createSecret(level) {
     const digits = [];
     digits.push(createRandomDigit(1, 9));
