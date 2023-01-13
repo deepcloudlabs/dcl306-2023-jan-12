@@ -51,21 +51,33 @@ class Mastermind extends React.PureComponent {
     }
 
     componentDidMount() {
-        setInterval(() => {
-            const game = {...this.state.game};
-            game.counter--;
-            game.pbWidthCounter = Math.round(game.counter*5/3).toString().concat("%");
-            if (game.counter <= 30)
-                game.pbColorCounter = "bg-danger";
-            else if (game.counter <= 45)
-                game.pbColorCounter = "bg-warning";
-            else
-                game.pbColorCounter = "bg-primary";
-            this.setState({game}, () => { // setState is an asynchronous function
-                // console.log(`Model has changed: ${this.state.game.level}`)
-            });
-        }, 1_000);
+        setInterval(this.countDown, 1_000);
     }
+    decrementCounter = (game) => {
+        game.counter--;
+        game.pbWidthCounter = Math.round(game.counter*5/3).toString().concat("%");
+        if (game.counter <= 30)
+            game.pbColorCounter = "bg-danger";
+        else if (game.counter <= 45)
+            game.pbColorCounter = "bg-warning";
+        else
+            game.pbColorCounter = "bg-primary";
+    }
+    countDown = () => {
+        const game = {...this.state.game};
+        this.decrementCounter(game);
+        if (game.counter <= 0){
+            if (game.lives === 0){
+                //TODO: player loses the game
+            } else {
+                game.lives--;
+                initializeGame(game);
+            }
+        }
+        this.setState({game}, () => { // setState is an asynchronous function
+            // console.log(`Model has changed: ${this.state.game.level}`)
+        });
+    };
     handleInputChange = (event) => {
         const game = {...this.state.game};
         game[event.target.name] = Number(event.target.value);
@@ -103,6 +115,10 @@ class Mastermind extends React.PureComponent {
                         <FormGroup>
                             <Label label="Game Level" htmlFor="gameLevel"/>
                             <Badge id="gameLevel" bgColor="bg-success" value={this.state.game.level}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label label="Lives" htmlFor="lives"/>
+                            <Badge id="lives" bgColor="bg-primary" value={this.state.game.lives}/>
                         </FormGroup>
                         <FormGroup>
                             <Label label="Tries" htmlFor="tries"/>
