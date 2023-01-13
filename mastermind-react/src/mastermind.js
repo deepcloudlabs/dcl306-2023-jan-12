@@ -40,6 +40,7 @@ class Mastermind extends React.PureComponent {
             this.setState({game},()=>{
                 console.log(`After setState(): ${this.state.game.level}`)
             });
+            console.log(`After setState(): ${this.state.game.level}`)
         } , 3_000);
     }
 
