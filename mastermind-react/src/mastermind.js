@@ -24,7 +24,8 @@ import loadStateFromLocalStorage from "./utility/localstorage-util";
 //    b. stateless components
 //       3) function-based component ✔
 //    Context API, reducer ✘
-//    React Routing ✘
+//    React Routing ✔
+//    Build and deployment ✔
 // 2. Functional Programming
 // 3. Reactive Programming
 //endregion
