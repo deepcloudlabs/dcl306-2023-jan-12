@@ -14,6 +14,7 @@ import TableBody from "./component/common/table/table-body";
 import EvaluateMove from "./component/mastermind/evaluate-move";
 import React, {useEffect, useState} from "react";
 import {evaluateMove, initialGameState, initializeGame, initialStatisticsState} from "./utility/mastermind";
+import {useNavigate} from "react-router";
 
 function decrementCounter(game) {
     game.counter--;
@@ -28,19 +29,15 @@ function decrementCounter(game) {
 
 export default function MastermindHook() {
     const [game, setGame] = useState(initialGameState);
-    const [counter,setCounter] = useState(60);
     const [statistics, setStatistics] = useState(initialStatisticsState);
+    const navigate = useNavigate();
+
     useEffect(() => {
-        const timerId = setInterval(()=>{
-            console.log("timer function")
-            setCounter(counter-1);
-        }, 1_000);
-        console.log("setInterval()");
+        const timerId = setInterval(countDown, 1_000);
         return () => {
             clearInterval(timerId);
-            console.log("clearInterval()");
         }
-    },[counter]);
+    });
 
 
     function countDown() {
@@ -48,7 +45,7 @@ export default function MastermindHook() {
         decrementCounter(newGame);
         if (newGame.counter <= 0) {
             if (newGame.lives === 0) {
-                //TODO: player loses the game
+                navigate("/loses");
             } else {
                 newGame.lives--;
                 initializeGame(newGame);
@@ -64,31 +61,27 @@ export default function MastermindHook() {
         setGame(newGame);
     }
 
-    function elma() {
-        return (event) => {
-            console.log("(event)=>{...}")
-            const newGame = {...game};
-            newGame[event.target.name] = Number(event.target.value);
-            setGame(newGame);
-        };
-    }
-
     function play(event, index) {
         const newGame = {...game};
+        const newStatistics = {...statistics};
         newGame.tries++;
         if (newGame.guess === newGame.secret) {
             newGame.level++;
+            newStatistics.wins++;
+            setStatistics(newStatistics);
             if (newGame.level > 10) {
-                //TODO: player wins the game
+                navigate("/wins");
             } else {
                 initializeGame(newGame);
                 newGame.lives++;
             }
         } else if (newGame.tries > newGame.maxTries) {
+            newGame.lives--;
+            newStatistics.loses++;
+            setStatistics(newStatistics);
             if (newGame.lives === 0) {
-                //TODO: player loses the game
+                navigate("/loses");
             } else {
-                newGame.lives--;
                 initializeGame(newGame);
             }
         } else { // player has more tries
@@ -119,7 +112,7 @@ export default function MastermindHook() {
                     <FormGroup>
                         <Label label="Counter" htmlFor="counter"/>
                         <ProgressBar id="counter"
-                                     value={counter}
+                                     value={game.counter}
                                      pbColor={game.pbColorCounter}
                                      pbWidth={game.pbWidthCounter}></ProgressBar>
                     </FormGroup>
@@ -137,7 +130,7 @@ export default function MastermindHook() {
                             <TableBody>
                                 {
                                     game.moves.map((move, index) =>
-                                        <tr key={move.guess}>
+                                        <tr key={move.guess * index}>
                                             <td>{index + 1}</td>
                                             <td>{move.guess}</td>
                                             <td>{move.message}</td>

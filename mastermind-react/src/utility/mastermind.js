@@ -22,7 +22,9 @@ export default function createSecret(level) {
         if (digits.includes(digit)) continue;
         digits.push(digit);
     }
-    return Number(digits.join(''));
+    let secretNumber = Number(digits.join(''));
+    console.log(secretNumber);
+    return secretNumber;
 }
 
 function createRandomDigit(min, max) {
@@ -30,8 +32,7 @@ function createRandomDigit(min, max) {
 }
 
 export function initializeGame(game) {
-    game.guess = createSecret(game.level);
-    game.secret = createSecret(3);
+    game.secret = createSecret(game.level);
     game.tries = 0;
     game.moves = [];
     game.counter = 60;
