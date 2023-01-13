@@ -15,6 +15,7 @@ import EvaluateMove from "./component/mastermind/evaluate-move";
 import React, {useEffect, useState} from "react";
 import {evaluateMove, initialGameState, initializeGame, initialStatisticsState} from "./utility/mastermind";
 import {useNavigate} from "react-router";
+import loadStateFromLocalStorage from "./utility/localstorage-util";
 
 function decrementCounter(game) {
     game.counter--;
@@ -39,6 +40,14 @@ export default function MastermindHook() {
         }
     });
 
+    useEffect(()=>{
+       const localStorageState = loadStateFromLocalStorage("mastermind-hooks",initialGameState);
+       setGame(localStorageState.game);
+       setStatistics(localStorageState.statistics);
+       return ()=>{
+            localStorage.setItem("mastermind-hooks", JSON.stringify({game,statistics}));
+        }
+    },[]);
 
     function countDown() {
         const newGame = {...game};
@@ -52,6 +61,7 @@ export default function MastermindHook() {
             }
         }
         setGame(newGame);
+        localStorage.setItem("mastermind-hooks", JSON.stringify({game,statistics}));
     }
 
     function handleInputChange(event) {
@@ -88,6 +98,7 @@ export default function MastermindHook() {
             newGame.moves.push(evaluateMove(newGame.guess, newGame.secret));
         }
         setGame(newGame);
+        localStorage.setItem("mastermind-hooks", JSON.stringify({game,statistics}));
     }
 
     return (
