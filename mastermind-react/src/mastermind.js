@@ -13,6 +13,7 @@ import createSecret, {evaluateMove, initializeGame} from "./utility/mastermind";
 import Table from "./component/common/table/table";
 import TableHeader from "./component/common/table/table-header";
 import TableBody from "./component/common/table/table-body";
+import EvaluateMove from "./component/mastermind/evaluate-move";
 
 //region NOTES ON COMPONENTS
 // 1. Component-Based Programming
@@ -126,7 +127,7 @@ class Mastermind extends React.PureComponent {
                         </FormGroup>
                         <FormGroup>
                             <Table id="moves">
-                                <TableHeader columns="ID,Guess,Message" />
+                                <TableHeader columns="ID,Guess,Message,Evaluation" />
                                 <TableBody>
                                     {
                                         this.state.game.moves.map( (move,index) =>
@@ -134,6 +135,7 @@ class Mastermind extends React.PureComponent {
                                                 <td>{index+1}</td>
                                                 <td>{move.guess}</td>
                                                 <td>{move.message}</td>
+                                                <td><EvaluateMove move={move}/></td>
                                             </tr>
                                         )
                                     }
