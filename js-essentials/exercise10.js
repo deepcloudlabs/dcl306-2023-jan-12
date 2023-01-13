@@ -7,7 +7,7 @@ for (const number of numbers) {
     }
 }
 console.log(`sum is ${sum}.`); // 78760
-const if_even = n => {
+const if_even = function (n) {
     console.log(`if_even(${n})`);
     return n % 2 === 0;
 }
@@ -15,6 +15,10 @@ const to_cube = u => {
     console.log(`to_cube(${u})`);
     return u ** 3;
 };
+function mapToCube(z){
+    return z**3;
+}
+const to_cube2 = u => u ** 3;
 const to_sum = (acc, v) => {
     console.log(`to_sum(${acc},${v})`);
     return acc + v;

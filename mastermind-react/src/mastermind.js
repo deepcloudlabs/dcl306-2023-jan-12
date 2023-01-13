@@ -1,4 +1,12 @@
 import React from "react";
+import Label from "./component/common/label";
+import Badge from "./component/common/badge";
+import Container from "./component/common/container";
+import Card from "./component/common/card";
+import CardHeader from "./component/common/card-header";
+import CardBody from "./component/common/card-body";
+import FormGroup from "./component/common/form-group";
+import ProgressBar from "./component/common/progress-bar";
 
 //region NOTES ON COMPONENTS
 // 1. Component-Based Programming
@@ -23,48 +31,74 @@ class Mastermind extends React.PureComponent {
                 maxTries: 10,
                 moves: [],
                 counter: 60,
-                lives: 3
-            },
+                lives: 3,
+                pbColorCounter: "bg-primary",
+                pbWidthCounter: "100%"
+             },
             statistics: {
                 wins: 0,
                 loses: 0
             }
         }
+        // this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     componentDidMount() {
         setInterval(() => {
             const game = {...this.state.game};
-            game.level++;
-            console.log(`Before setState(): ${this.state.game.level}`)
-            this.setState({game},()=>{
-                console.log(`After setState(): ${this.state.game.level}`)
+            game.counter--;
+            game.pbWidthCounter = Math.round(game.counter*5/3).toString().concat("%");
+            if (game.counter <= 30)
+                game.pbColorCounter = "bg-danger";
+            else if (game.counter <= 45)
+                game.pbColorCounter = "bg-warning";
+            else
+                game.pbColorCounter = "bg-primary";
+            this.setState({game}, () => { // setState is an asynchronous function
+                // console.log(`Model has changed: ${this.state.game.level}`)
             });
-            console.log(`After setState(): ${this.state.game.level}`)
-        } , 3_000);
+        }, 1_000);
     }
-
+    handleInputChange = (event) => {
+        const game = {...this.state.game};
+        game[event.target.name] = Number(event.target.value);
+        this.setState({game});
+    }
     render() {
         return (
-            <div className="container">
-                <div className="card">
-                    <div className="card-header">
-                        <h3 className="card-title">Game Console</h3>
-                    </div>
-                    <div className="card-body">
-                        <div className="mb-3">
-                            <label className="form-label" htmlFor="gameLevel">Game Level: </label>
-                            <span id="gameLevel" className="badge bg-success">{this.state.game.level}</span>
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label" htmlFor="tries">Tries: </label>
-                            <span id="tries" className="badge bg-warning">{this.state.game.tries}</span>
+            <Container id="mastermind">
+                <Card id="gameConsole">
+                    <CardHeader title="Game Console"></CardHeader>
+                    <CardBody>
+                        <FormGroup>
+                            <Label label="Game Level" htmlFor="gameLevel"/>
+                            <Badge id="gameLevel" bgColor="bg-success" value={this.state.game.level}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label label="Tries" htmlFor="tries"/>
+                            <Badge id="tries" bgColor="bg-warning" value={this.state.game.tries}/>
                             <span className="form-label"> out of </span>
-                            <span id="tries" className="badge bg-danger">{this.state.game.maxTries}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            <Badge id="maxTries" bgColor="bg-danger" value={this.state.game.maxTries}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label label="Counter" htmlFor="counter"/>
+                            <ProgressBar id="counter"
+                                         value={this.state.game.counter}
+                                         pbColor={this.state.game.pbColorCounter}
+                                         pbWidth={this.state.game.pbWidthCounter}></ProgressBar>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label label="Guess" htmlFor="guess"/>
+                            <input id="guess"
+                                   className="form-control"
+                                   type="text"
+                                   name="guess"
+                                   onChange={this.handleInputChange}
+                                   value={this.state.game.guess}></input>
+                        </FormGroup>
+                    </CardBody>
+                </Card>
+            </Container>
         );
     }
 }

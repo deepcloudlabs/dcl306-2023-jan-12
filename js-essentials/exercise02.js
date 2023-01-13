@@ -4,10 +4,10 @@ class Employee {
         this.fullname = fullname;
         this.salary = salary;
         this.iban = iban;
-        this.sayHello = this.sayHello.bind(this);
+        //this.sayHello = this.sayHello.bind(this);
     }
 
-    sayHello(){
+    sayHello = () => {
         console.log(this);
         console.log(`Hello, ${this.fullname}!`);
     }
