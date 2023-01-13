@@ -1,0 +1,13 @@
+{
+  "name": "study-modules",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "middleware": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -9,7 +9,10 @@ import FormGroup from "./component/common/form-group";
 import ProgressBar from "./component/common/progress-bar";
 import InputText from "./component/common/input-text";
 import Button from "./component/common/button";
-import createSecret from "./utility/mastermind";
+import createSecret, {evaluateMove, initializeGame} from "./utility/mastermind";
+import Table from "./component/common/table/table";
+import TableHeader from "./component/common/table/table-header";
+import TableBody from "./component/common/table/table-body";
 
 //region NOTES ON COMPONENTS
 // 1. Component-Based Programming
@@ -69,14 +72,32 @@ class Mastermind extends React.PureComponent {
     }
     play = (event) => {
         const game = {...this.state.game};
-
+        game.tries++;
+        if (game.guess === game.secret){
+            game.level++;
+            if (game.level > 10){
+                //TODO: player wins the game
+            } else {
+                initializeGame(game);
+                game.lives++;
+            }
+        } else if (game.tries > game.maxTries){
+            if (game.lives === 0){
+                //TODO: player loses the game
+            } else {
+                game.lives--;
+                initializeGame(game);
+            }
+        } else { // player has more tries
+            game.moves.push(evaluateMove(game.guess, game.secret));
+        }
         this.setState({game});
     }
     render() {
         return (
             <Container id="mastermind">
                 <Card id="gameConsole">
-                    <CardHeader title="Game Console"></CardHeader>
+                    <CardHeader title="Game Console"/>
                     <CardBody>
                         <FormGroup>
                             <Label label="Game Level" htmlFor="gameLevel"/>
@@ -102,6 +123,22 @@ class Mastermind extends React.PureComponent {
                                        handleChange={this.handleInputChange} />
                             <p></p>
                             <Button id="play" label="Play" bgColor="btn-success" click={this.play} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Table id="moves">
+                                <TableHeader columns="ID,Guess,Message" />
+                                <TableBody>
+                                    {
+                                        this.state.game.moves.map( (move,index) =>
+                                            <tr key={move.guess}>
+                                                <td>{index+1}</td>
+                                                <td>{move.guess}</td>
+                                                <td>{move.message}</td>
+                                            </tr>
+                                        )
+                                    }
+                                </TableBody>
+                            </Table>
                         </FormGroup>
                     </CardBody>
                 </Card>
