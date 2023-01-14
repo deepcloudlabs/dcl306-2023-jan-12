@@ -46,7 +46,9 @@ ws.on("message", data => {
         "symbol": frame.s,
         "price": frame.p,
         "quantity": frame.q,
-        "timestamp": frame.E
+        "timestamp": frame.T,
+        "sequence": frame.t,
+        "tradeId": frame.E
     } ;
 	console.log(model);
     let trade = new Trade(model);
