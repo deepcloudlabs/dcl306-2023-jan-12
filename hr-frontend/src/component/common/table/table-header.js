@@ -1,4 +1,4 @@
-export default function TableHeader({columns}){
+export default function TableHeader({columns, children}){
     return(
         <thead>
             <tr>
@@ -8,6 +8,11 @@ export default function TableHeader({columns}){
                     )
                 }
             </tr>
+        <tr>
+            <th>
+                {children}
+            </th>
+        </tr>
         </thead>
     );
 }
