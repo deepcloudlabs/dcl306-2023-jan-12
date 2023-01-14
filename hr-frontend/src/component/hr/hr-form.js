@@ -5,6 +5,7 @@ import SelectBox from "../common/input/select-box";
 import CheckBox from "../common/input/check-box";
 import Photo from "../common/input/photo";
 import {useDepartments, useHr, useHrDispatcher} from "../../provider/hr-provider";
+import Button from "../common/input/button";
 
 export function HrForm() {
     const hr = useHr();
@@ -17,6 +18,14 @@ export function HrForm() {
                            id="identityNo"
                            handleChange={(event) => hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})}/>
                 <Label label="Identity No" htmlFor="identityNo"/>
+                <Button id="findEmployee"
+                        label="Find Employee"
+                        click={(event) => hrDispatcher({type: "FIND_EMPLOYEE"})}
+                        bgColor="bg-success"></Button>
+                <Button id="fireEmployee"
+                        label="Fire Employee"
+                        click={(event) => hrDispatcher({type: "FIRE_EMPLOYEE"})}
+                        bgColor="bg-danger"></Button>
             </FormGroup>
             <FormGroup className="form-floating">
                 <InputText value={hr.employee.fullname}
@@ -61,7 +70,16 @@ export function HrForm() {
                        id="photo"
                        handleChange={(image) => hrDispatcher({type: "HANDLE_PHOTO_CHANGE", image})}/>
             </FormGroup>
-
+            <FormGroup>
+                <Button id="hireEmployee"
+                        label="Hire Employee"
+                        click={(event) => hrDispatcher({type: "HIRE_EMPLOYEE"})}
+                        bgColor="bg-primary"></Button>
+                <Button id="updateEmployee"
+                        label="Update Employee"
+                        click={(event) => hrDispatcher({type: "UPDATE_EMPLOYEE"})}
+                        bgColor="bg-warning"></Button>
+            </FormGroup>
         </>
     );
 }
