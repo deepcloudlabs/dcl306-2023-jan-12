@@ -8,3 +8,5 @@ export const jack = {
     "department": "HR",
     "fulltime": false
 }
+
+export const departments = ["IT", "Sales", "Finance", "HR"];

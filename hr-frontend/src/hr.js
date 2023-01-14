@@ -5,11 +5,13 @@ import CardBody from "./component/common/card-body";
 import FormGroup from "./component/common/form-group";
 import InputText from "./component/common/input-text";
 import Label from "./component/common/label";
-import {useContext} from "react";
-import {HrContext} from "./provider/hr-provider";
+import {useDepartments, useHr, useHrDispatcher} from "./provider/hr-provider";
+import SelectBox from "./component/common/select-box";
 
 function Hr() {
-    const {hr, hrDispatcher} = useContext(HrContext);
+    const hr = useHr();
+    const hrDispatcher = useHrDispatcher();
+    const departments = useDepartments();
 
     return (
         <Container>
@@ -20,8 +22,39 @@ function Hr() {
                     <FormGroup className="form-floating">
                         <InputText value={hr.employee.identityNo}
                                    id="identityNo"
-                                   handleChange={(event)=> hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})} />
+                                   handleChange={(event) => hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})}/>
                         <Label label="Identity No" htmlFor="identityNo"/>
+                    </FormGroup>
+                    <FormGroup className="form-floating">
+                        <InputText value={hr.employee.fullname}
+                                   id="fullname"
+                                   handleChange={(event) => hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})}/>
+                        <Label label="Full Name" htmlFor="fullname"/>
+                    </FormGroup>
+                    <FormGroup className="form-floating">
+                        <InputText value={hr.employee.salary}
+                                   id="salary"
+                                   handleChange={(event) => hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})}/>
+                        <Label label="Salary" htmlFor="salary"/>
+                    </FormGroup>
+                    <FormGroup className="form-floating">
+                        <InputText value={hr.employee.iban}
+                                   id="iban"
+                                   handleChange={(event) => hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})}/>
+                        <Label label="International Bank Account Number" htmlFor="iban"/>
+                    </FormGroup>
+                    <FormGroup className="form-floating">
+                        <InputText value={hr.employee.birthYear}
+                                   id="birthYear"
+                                   handleChange={(event) => hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})}/>
+                        <Label label="Birth Year" htmlFor="birthYear"/>
+                    </FormGroup>
+                    <FormGroup className="form-floating">
+                        <SelectBox value={hr.employee.department}
+                                   options={departments}
+                                   id="department"
+                                   handleChange={(event) => hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})}/>
+                        <Label label="Department" htmlFor="department"/>
                     </FormGroup>
                 </CardBody>
             </Card>
