@@ -10,6 +10,10 @@ export default function hrReducer(hrState, action) {
             break;
         case "GET_EMPLOYEES":
             break;
+        case "HANDLE_INPUT_CHANGE":
+            const event = action.event;
+            employee[event.target.name] = event.target.value;
+            break;
         default:
             throw `Unknown action type (${action.type})`;
     }

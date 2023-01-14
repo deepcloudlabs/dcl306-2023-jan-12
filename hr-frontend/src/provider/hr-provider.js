@@ -10,7 +10,7 @@ export default function HrProvider({children}) {
     const employees = [];
     const [hr, hrDispatcher] = useReducer(hrReducer, {employee, employees});
     return (
-        <HrContext.Provider value={{hr}}>
+        <HrContext.Provider value={{hr, hrDispatcher}}>
             {children}
         </HrContext.Provider>
     );
