@@ -14,7 +14,7 @@ export default function hrReducer(hrState, action) {
         case "FIRE_EMPLOYEE":
             break;
         case "UPDATE_EMPLOYEE":
-            if (action.response.status === "OK") {
+            if (action.response.nModified > 1) {
                 //TODO: Updating an employee is successful
                 alert("Successful");
             } else {
