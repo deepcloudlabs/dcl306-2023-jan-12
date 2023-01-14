@@ -1,5 +1,4 @@
 export default function SelectBox({id, handleChange, value, options}){
-    console.log(options)
     return (
       <select id={id}
               name={id}
