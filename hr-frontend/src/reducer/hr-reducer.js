@@ -8,7 +8,8 @@ export default function hrReducer(hrState, action) {
             break;
         case "GET_EMPLOYEE":
             break;
-        case "GET_EMPLOYEES":
+        case "HANDLE_PHOTO_CHANGE":
+            employee.photo = action.image;
             break;
         case "HANDLE_INPUT_CHANGE":
             const event = action.event;

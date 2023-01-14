@@ -1,12 +1,14 @@
-import Container from "./component/common/container";
-import Card from "./component/common/card";
-import CardHeader from "./component/common/card-header";
-import CardBody from "./component/common/card-body";
-import FormGroup from "./component/common/form-group";
-import InputText from "./component/common/input-text";
-import Label from "./component/common/label";
+import Container from "./component/common/card/container";
+import Card from "./component/common/card/card";
+import CardHeader from "./component/common/card/card-header";
+import CardBody from "./component/common/card/card-body";
+import FormGroup from "./component/common/output/form-group";
+import InputText from "./component/common/input/input-text";
+import Label from "./component/common/output/label";
 import {useDepartments, useHr, useHrDispatcher} from "./provider/hr-provider";
-import SelectBox from "./component/common/select-box";
+import SelectBox from "./component/common/input/select-box";
+import CheckBox from "./component/common/input/check-box";
+import Photo from "./component/common/input/photo";
 
 function Hr() {
     const hr = useHr();
@@ -55,6 +57,18 @@ function Hr() {
                                    id="department"
                                    handleChange={(event) => hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})}/>
                         <Label label="Department" htmlFor="department"/>
+                    </FormGroup>
+                    <FormGroup className="form-floating">
+                        <CheckBox value={hr.employee.fulltime}
+                                   label="FULL-TIME"
+                                   id="fulltime"
+                                   handleChange={(event) => hrDispatcher({type: "HANDLE_INPUT_CHANGE", event})}/>
+                    </FormGroup>
+                    <FormGroup className="form-floating">
+                        <Photo value={hr.employee.photo}
+                                   label="Photo"
+                                   id="photo"
+                                   handleChange={(image) => hrDispatcher({type: "HANDLE_PHOTO_CHANGE", image})}/>
                     </FormGroup>
                 </CardBody>
             </Card>
