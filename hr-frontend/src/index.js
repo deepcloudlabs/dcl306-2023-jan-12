@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Hr from './hr';
+import Hr from './component/hr/hr';
 import "bootstrap/dist/css/bootstrap.css";
 import HrProvider from "./provider/hr-provider";
 

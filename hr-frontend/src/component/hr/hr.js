@@ -1,14 +1,14 @@
-import Container from "./component/common/card/container";
-import Card from "./component/common/card/card";
-import CardHeader from "./component/common/card/card-header";
-import CardBody from "./component/common/card/card-body";
-import FormGroup from "./component/common/output/form-group";
-import InputText from "./component/common/input/input-text";
-import Label from "./component/common/output/label";
-import {useDepartments, useHr, useHrDispatcher} from "./provider/hr-provider";
-import SelectBox from "./component/common/input/select-box";
-import CheckBox from "./component/common/input/check-box";
-import Photo from "./component/common/input/photo";
+import Container from "../common/card/container";
+import Card from "../common/card/card";
+import CardHeader from "../common/card/card-header";
+import CardBody from "../common/card/card-body";
+import FormGroup from "../common/output/form-group";
+import InputText from "../common/input/input-text";
+import Label from "../common/output/label";
+import {useDepartments, useHr, useHrDispatcher} from "../../provider/hr-provider";
+import SelectBox from "../common/input/select-box";
+import CheckBox from "../common/input/check-box";
+import Photo from "../common/input/photo";
 
 function Hr() {
     const hr = useHr();
