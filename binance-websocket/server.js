@@ -50,12 +50,12 @@ ws.on("message", data => {
         "sequence": frame.t,
         "tradeId": frame.E
     } ;
-	console.log(model);
+	console.log(frame);
     let trade = new Trade(model);
     trade.save((err,t) => {
          if (err) console.error(err);
     });
     sockets.forEach( socket => {
-        socket.emit('ticker',model);
+        socket.emit('trade',model);
     })
 });
