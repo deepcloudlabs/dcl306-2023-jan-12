@@ -54,6 +54,19 @@ export function HrForm() {
     }
     //endregion
 
+    //region FIRE EMPLOYEE BY IDENTITY NO
+    function fireEmployeeByIdentityNo(event) {
+        fetch(`http://localhost:4001/employees/${employee.identityNo}`, {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(employee => hrDispatcher({type: "FIRE_EMPLOYEE", employee}))
+    }
+    //endregion
+
     return (
         <>
             <FormGroup className="form-floating">
@@ -67,7 +80,7 @@ export function HrForm() {
                         bgColor="bg-success"></Button>
                 <Button id="fireEmployee"
                         label="Fire Employee"
-                        click={(event) => hrDispatcher({type: "FIRE_EMPLOYEE"})}
+                        click={fireEmployeeByIdentityNo}
                         bgColor="bg-danger"></Button>
             </FormGroup>
             <FormGroup className="form-floating">
@@ -109,6 +122,7 @@ export function HrForm() {
             </FormGroup>
             <FormGroup className="form-floating">
                 <Photo value={hr.employee.photo}
+                       width={128}
                        label="Photo"
                        id="photo"
                        handleChange={(image) => hrDispatcher({type: "HANDLE_PHOTO_CHANGE", image})}/>

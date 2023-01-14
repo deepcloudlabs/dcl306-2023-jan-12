@@ -4,6 +4,7 @@ import TableBody from "../common/table/table-body";
 import {useEmployees, useHrDispatcher} from "../../provider/hr-provider";
 import Badge from "../common/output/badge";
 import Button from "../common/input/button";
+import JobStyle from "./job-style";
 
 const columns = "ID,Identity No,Photo,Full Name,Salary,IBAN,Birth Year,Department,Is full-time?,Operations";
 export default function HrEmployeesTable() {
@@ -21,6 +22,20 @@ export default function HrEmployeesTable() {
             .then(employees => hrDispatcher({type: "FIND_ALL_EMPLOYEES", employees}))
     }
 
+    function fireEmployee(identityNo){
+        fetch(`http://localhost:4001/employees/${identityNo}`, {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(employee => hrDispatcher({type: "FIRE_EMPLOYEE", employee}))
+    }
+
+    function copyEmployee(employee){
+        hrDispatcher({type: "COPY_EMPLOYEE", employee})
+    }
     return (
         <>
             <Button bgColor="bg-info"
@@ -33,7 +48,8 @@ export default function HrEmployeesTable() {
                 <TableBody>
                     {
                         employees.map((emp, idx) =>
-                            <tr key={emp.identityNo}>
+                            <tr onClick={event => copyEmployee(emp)}
+                                key={emp.identityNo}>
                                 <td>{idx + 1}</td>
                                 <td>{emp.identityNo}</td>
                                 <td><img src={emp.photo}
@@ -47,10 +63,10 @@ export default function HrEmployeesTable() {
                                 <td><Badge id="department"
                                            bgColor="bg-info"
                                            value={emp.department}/></td>
-                                <td>{emp.fulltime ? 'FULL-TIME' : 'PART-TIME'}</td>
+                                <td><JobStyle id={emp.identityNo.toString().concat("-fulltime")}
+                                              fulltime={emp.fulltime} /></td>
                                 <td><Button bgColor="bg-danger"
-                                            click={() => {
-                                            }}
+                                            click={event => fireEmployee(emp.identityNo)}
                                             id="fireEmp"
                                             label="Fire Employee"></Button></td>
                             </tr>

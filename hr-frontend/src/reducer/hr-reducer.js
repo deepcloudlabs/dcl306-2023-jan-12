@@ -12,6 +12,11 @@ export default function hrReducer(hrState, action) {
             }
             break;
         case "FIRE_EMPLOYEE":
+            employee = action.employee;
+            employees = employees.filter( emp => emp.identityNo !== employee.identityNo);
+            break;
+        case "COPY_EMPLOYEE":
+            employee = action.employee;
             break;
         case "UPDATE_EMPLOYEE":
             if (action.response.nModified > 0) {
