@@ -7,10 +7,19 @@ import SelectBox from "./component/common/input/select-box";
 import {useState} from "react";
 import Label from "./component/common/output/label";
 import Button from "./component/common/input/button";
+import {tradeData} from "./utility/market-util";
+import TableHeader from "./component/common/table/table-header";
+import TableBody from "./component/common/table/table-body";
+import Table from "./component/common/table/table";
 
 function Market() {
     const [windowSize, setWindowSize] = useState(25);
-    const [monitoringButtonState, setMonitoringButtonState] = useState({status: false, bgColor: "bg-success", label: "Start"});
+    const [trades, setTrades] = useState(tradeData);
+    const [monitoringButtonState, setMonitoringButtonState] = useState({
+        status: false,
+        bgColor: "bg-success",
+        label: "Start"
+    });
 
     function changeMonitoring(event) {
         const newMonitoringButtonState = {...monitoringButtonState};
@@ -43,6 +52,26 @@ function Market() {
                                 label={monitoringButtonState.label}
                                 click={changeMonitoring}
                                 bgColor={monitoringButtonState.bgColor}></Button>
+                    </FormGroup>
+                    <FormGroup>
+                        <Table>
+                            <TableHeader columns="Sequence,Trade ID,Symbol,Price,Quantity,Volume,Timestamp"/>
+                            <TableBody>
+                                {
+                                    trades.map((trade,idx) =>
+                                        <tr key={trade.sequence}>
+                                            <td>{trade.sequence}</td>
+                                            <td>{trade.tradeId}</td>
+                                            <td>{trade.symbol}</td>
+                                            <td>{trade.price}</td>
+                                            <td>{trade.quantity}</td>
+                                            <td>{Number(trade.price * trade.quantity).toFixed(0)}</td>
+                                            <td>{trade.timestamp}</td>
+                                        </tr>
+                                    )
+                                }
+                            </TableBody>
+                        </Table>
                     </FormGroup>
                 </CardBody>
             </Card>
